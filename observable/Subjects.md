@@ -42,3 +42,9 @@ const multicastedInterval$ = interval$.pipe(
 ## BehaviorSubject
 
 const subject$ = new BehaviorSubject(0); // A variant of Subject that requires an initial value and emits its current value whenever it is subscribed to.
+
+## ReplaySubject
+
+const subject$ = new ReplaySubject(3); //  dont need an initial value, but we use it if new subscribers need to receive a number of previously emited values
+
+- **shareReplay** - turns unicast observable to multicast and also replays last values

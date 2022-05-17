@@ -48,3 +48,15 @@ const subject$ = new BehaviorSubject(0); // A variant of Subject that requires a
 const subject$ = new ReplaySubject(3); //  dont need an initial value, but we use it if new subscribers need to receive a number of previously emited values
 
 - **shareReplay** - turns unicast observable to multicast and also replays last values
+
+```
+shareReplay(1) // replay only last value
+shareReplay(1, 2000) // second argument - how long replayed values will be available
+
+## AsyncSubject
+
+const subject$ = AsyncSubject();
+
+emit the last single value to all subscriptions only when this observable is complete.
+
+subject$.complete();

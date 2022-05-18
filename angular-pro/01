@@ -1,0 +1,37 @@
+## Content projection with ng-content
+
+```
+<ng-content select="h3"></ng-content>    // works like query selector
+
+<ng-content select=".remember"></ng-content>    // bind by class
+
+```
+
+- get access to the progected content:
+
+```
+@ViewChild(AuthMessageComponent) message: AuthMessageComponent;
+
+@ContentChild(AuthRememberComponent) remember: AuthRememberComponent;
+@ContentChildren(AuthRememberComponent) rememberList: QueryList<AuthRememberComponent>;
+
+ngAfterViewInit() {
+  
+}
+
+ngAfterContentInit() {
+  if (this.remember){
+    this.remember.checked.subscribe((checked: boolean) => {
+      this.showMessage = checked;
+    });
+  }
+  
+  if (this.rememberList){
+    this.remember.forEach((item) => {
+      item.checked.subscribe((checked: boolean) => {
+        this.showMessage = checked;
+      });
+    }
+  }
+}
+```

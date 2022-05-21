@@ -10,6 +10,8 @@
 - get access to the projected content:
 
 ```
+@ViewChild('email') email: ElementRef;
+
 @ViewChild(AuthMessageComponent) message: AuthMessageComponent;
 @ViewChildren(AuthMessageComponent) remember: QueryList<AuthMessageComponent>;
 
@@ -19,6 +21,8 @@
 constructor(private _cd: ChangeDetectorRef) {}
 
 ngAfterViewInit() {
+  console.log(this.email.nativeElement);
+  
   if (this.message) {
     this.message.forEach((message) => {  
       message.days = 30;

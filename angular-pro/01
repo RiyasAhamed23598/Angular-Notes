@@ -7,16 +7,24 @@
 
 ```
 
-- get access to the progected content:
+- get access to the projected content:
 
 ```
 @ViewChild(AuthMessageComponent) message: AuthMessageComponent;
+@ViewChildren(AuthMessageComponent) remember: QueryList<AuthMessageComponent>;
 
 @ContentChild(AuthRememberComponent) remember: AuthRememberComponent;
 @ContentChildren(AuthRememberComponent) rememberList: QueryList<AuthRememberComponent>;
 
+constructor(private _cd: ChangeDetectorRef) {}
+
 ngAfterViewInit() {
-  
+  if (this.message) {
+    this.message.forEach((message) => {  
+      message.days = 30;
+    }
+  }
+  this._cd.detectChanges();
 }
 
 ngAfterContentInit() {

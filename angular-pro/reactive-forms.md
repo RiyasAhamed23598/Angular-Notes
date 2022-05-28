@@ -63,5 +63,47 @@ this.form.get('stock')
 
 this.parent.get('selector).reset({product: '1', quantity: '10'}); //ng-untouched ng-pristine instead of ng-touched ng-dirty
 
+## Control Value Accessor
 
+interface ControlValueAccessor {
+  writeValue(obj: any): void
+  registerOnChange(fn: any): void
+  registerOnTouched(fn: any): void
+  setDisabledState(isDisabled: boolean)?: void
+}
+
+```
+const COUNTER_CONTROL_ACCCESSOR = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forvardRef(() => StockCounterComponent)
+}
+
+export class MyComponent implements ControlValueAccessor {
+  private onTouch: Function;
+  private onModelChange: Function;
+  
+  registerOnTouched(fn) {
+    this.onTouch = fn
+  }
+  
+  registerOnChange(fn) {
+    this.onModelChange = fn
+  }
+  
+  wrireValue(value) {
+    this.value = value || 0;
+  }
+  
+  registerOnChange(fn) {}
+  registerOnTouched(fn) {}
+  
+  increment () {
+    if (this.value < this.max) {
+      this.value = this.value + this.step;      
+      this.onModelChange(this.value);
+    }
+    this.onTouch();
+  }
+}
+```
 

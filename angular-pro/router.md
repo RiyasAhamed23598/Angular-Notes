@@ -60,3 +60,30 @@ this.router.navigate(
 <a [routerLink]="[{ outlets: { primary: 'folder/inbox, pane: null}}]" ></a>
 ```
 
+ ## Guards
+ 
+ - **canLoad** for lazy-loaded modules
+ - **canActivate**
+ - **canActivateChild**
+ - **canDeactivate**
+
+```
+@Injectable()
+export class AuthGuard implements CanLoad, CanActivate {
+  constructor(private authService: AuthService) {}
+  
+  canLoad(): boolean | UrlTree {
+    return this.authService.checkPermissions();
+  }
+  
+  canActivate(): boolean | UrlTree {
+    return this.authService.isLoggedIn();
+  }
+}
+```
+
+```
+export declare interface CanActivate {
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;
+}
+```

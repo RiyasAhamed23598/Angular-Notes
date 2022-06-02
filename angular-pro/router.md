@@ -64,8 +64,8 @@ this.router.navigate(
  
  - **canLoad** for lazy-loaded modules
  - **canActivate**
- - **canActivateChild**
- - **canDeactivate**
+ - **canActivateChild** - can access path but can not access children
+ - **canDeactivate** - works for particular component
 
 ```
 @Injectable()
@@ -85,5 +85,19 @@ export class AuthGuard implements CanLoad, CanActivate {
 ```
 export declare interface CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree;
+}
+```
+
+```
+@Injectable()
+export class MailViewGuard implements CanDeactivate<MailViewComponent> {
+  constructor(private authService: AuthService) {}
+  
+  canDeactivate(component: MailViewComponent) {
+    if(component.hasUnsavedChanges) {
+      return window.confirm('Are you sure you want to leave?');
+    }
+    return true;
+  } 
 }
 ```

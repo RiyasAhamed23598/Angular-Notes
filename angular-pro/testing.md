@@ -47,3 +47,34 @@ describe('Shallow FileSizePipe test', () => {
     })
   })
 ```
+
+## Testing service with httpClient
+
+```
+describe('StockInventoryService', () => {
+  let service: StockInventoryService;
+  let httpClient: HttpClient;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        StockInventoryService,
+      ],
+      imports: [HttpClientTestingModule]
+    });
+
+    httpClient = TestBed.inject(HttpClient);
+    service = TestBed.inject(StockInventoryService);
+  });
+
+  it ('should get cart items', () => {
+    spyOn(httpClient, 'get').and.returnValue(of([...cartItems]));
+
+    service.getCartItems().subscribe((result: Item[]) => {
+        expect(result.length).toBe(1);
+        expect(result).toEqual(cartItems);
+      }
+    )
+  })
+})
+```

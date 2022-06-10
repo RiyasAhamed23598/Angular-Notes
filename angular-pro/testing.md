@@ -78,3 +78,53 @@ describe('StockInventoryService', () => {
   })
 })
 ```
+
+### Testing components
+
+```
+describe('CounterComponent', () => {
+
+  let component: CounterComponent;
+  let fixture: ComponentFixture<CounterComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        CounterComponent
+      ],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CounterComponent);
+    component = fixture.componentInstance;
+
+    component.value = 0;
+  });
+
+  it('should increment correctly', () => {
+    component.increment();
+    expect(component.value).toBe(1);
+  })
+
+  it('should not increment over the maximum value', () => {
+    for (let i = 0; i < 200; i++){
+      component.increment();
+    }
+    expect(component.value).toBe(100);
+  })
+
+  it('should not increment over the maximum value with input', () => {
+    component.step = 20;
+    component.max = 20;
+    component.increment();
+    component.increment();
+    expect(component.value).toBe(20);
+  })
+
+  it('should call the output on a value change', () => {
+    spyOn(component.changed, 'emit').and.callThrough();
+    component.step = 100;
+    component.increment();
+    expect(component.changed.emit).toHaveBeenCalledWith(100);
+  })
+} )
+```

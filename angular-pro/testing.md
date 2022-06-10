@@ -86,6 +86,7 @@ describe('CounterComponent', () => {
 
   let component: CounterComponent;
   let fixture: ComponentFixture<CounterComponent>;
+  let el: DebugElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -96,7 +97,7 @@ describe('CounterComponent', () => {
 
     fixture = TestBed.createComponent(CounterComponent);
     component = fixture.componentInstance;
-
+    el = fixture.debugElement;
     component.value = 0;
   });
 
@@ -126,5 +127,19 @@ describe('CounterComponent', () => {
     component.increment();
     expect(component.changed.emit).toHaveBeenCalledWith(100);
   })
+  
+  it ('should increment when the + button is clicked', () => {
+    el.query(By.css('button:first-child')).triggerEventHandler('click', null);
+    fixture.detectChanges();
+    expect(component.value).toBe(1);
+    expect(el.query(By.css('p')).nativeElement.textContent).toBe('1');
+  });
+
+  it ('should increment the value when the up arrow is pressed', () => {
+    const event = new Event('KeyboardEvent') as any;
+    event.code = 'ArrowUp';
+    el.query(By.css('.counter > div > div')).triggerEventHandler('keydown', event);
+    expect(component.value).toEqual(1);
+  });
 } )
 ```

@@ -143,3 +143,82 @@ describe('CounterComponent', () => {
   });
 } )
 ```
+
+## Testing container Components with async providers
+
+```
+class MockStockInventoryService {
+  getProducts() {
+    return of([{id:1, price: 10, name: 'Test'}]);
+  }
+  getCartItems() {
+    return of([{id:1, quantity: 1}]);
+  }
+}
+
+describe('StockInventoryComponent', () => {
+
+  let component: CounterComponent;
+  let fixture: ComponentFixture<CounterComponent>;
+  let el: DebugElement;
+  let service: StockInventoryService;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
+      declarations: [
+        StockInventoryComponent,
+        StockBranchComponent,
+        StockCounterComponent,
+        StockProductComponent,
+        StockSelectorComponent
+      ],
+      providers: [
+        { provide: StockInventoryService, useClass: MockStockInvertoryService }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(CounterComponent);
+    component = fixture.componentInstance;
+    el = fixture.debugElement;
+    component.value = 0;
+    service = el.injector.get(StockInventoryService);
+  });
+
+  it('should get cart items and products on init', () => {
+    spyOn(service, 'getProducts').and.callTrough();
+    spyOn(service, 'getCartItems').and.callTrough();
+    component.ngOnInit();
+    expect(service.getProducts).toHaveBeenCalled();
+    expect(service.getCartItems).toHaveBeenCalled();
+  });
+  
+  it('should create a product map from the service response', () => {
+    component.ngOnInit();
+    expect(component.productMap.get(1)).toEqual({id:1, price: 10, name: 'Test'});
+  });
+  
+  it('should create a stock item for each cart item', () => {
+    spyOn(component, 'addStock');
+    component.ngOnInit();
+    expect(component.addStock).toHaveBeenCalledWith({id:1, quantity: 1});
+  });
+})
+```
+
+### NO_ERRORS_SCHEMA
+
+allow to use a particular component without warrying about child components
+```
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule],
+      declarations: [
+        StockInventoryComponent
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: StockInventoryService, useClass: MockStockInvertoryService }
+      ]
+    }).compileComponents();
+```

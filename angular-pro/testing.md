@@ -208,7 +208,7 @@ describe('StockInventoryComponent', () => {
 
 ### NO_ERRORS_SCHEMA
 
-allow to use a particular component without warrying about child components
+allow to use a particular component without warrying about importing child components
 ```
   beforeEach(async () => {
     await TestBed.configureTestingModule({

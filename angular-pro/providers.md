@@ -79,3 +79,28 @@ providers: [
   }
 ]
 ```
+## Configurable NgModules
+
+```
+  imports: [
+    FoodStoreModule.forRoot({storeId: 10292, storeToken: 'ewrwerwre123232'})
+  ]
+  
+//---
+
+@ngModule({
+})
+export class FoodStoreModule {
+  static forRoot(config: FoodStoreConfig): ModuleWithProviders {
+    return {
+      ngModule: FoodStoreModule,
+      providers: [
+        FOOD_PROVIDERS, // array of other not configurable providers
+        {provide: FOOD_STORE_CONFIG,
+        useValue: config}
+      ]
+    }
+  }
+}  
+```
+

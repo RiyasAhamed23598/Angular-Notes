@@ -37,7 +37,7 @@ constructor(
 ){}
 ```
 
-## Use class
+## useСlass
 
 @ngModule:
 ```
@@ -46,3 +46,36 @@ providers: [
 ]
 ```
 
+## useFactory
+
+```
+export function PizzaFactory(http) {
+  return new FoodService(http, '/api/drinks');
+}
+//---
+providers: [
+  { 
+  provide: FoodService, 
+  useFactory: (http) => {
+      return new FoodService(http, '/api/drinks');
+    }
+  },
+  deps: [
+    Http //make available in factory function
+  ]
+]
+```
+## useExisting
+for restriction some methods if FoodServis and using only that provides DrinkService
+```
+export abstract class DrinkService {
+  getDrinks: () => Observable<Drink[]>
+}
+
+providers: [
+  { 
+  provide: DrinkService, 
+  useExisting: FoodService
+  }
+]
+```

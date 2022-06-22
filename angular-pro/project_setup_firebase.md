@@ -77,6 +77,14 @@ export class AuthService {
     private af: AngularFireAuth
   ){}
   
+  get user() {
+    return this.af.auth.currentUser;
+  }
+  
+  get authState() {
+    return this.af.authState;
+  }
+  
   createUser(email: string, password: string) {
     return this.af.auth.createUserWithEmailAndPassword(email, password);
   }
@@ -99,6 +107,43 @@ async registerUser(event: FormGroup) {
     this.router.navigate(['/']);
   } catch (err) {
     this.error = err.message;
+  }
+}
+```
+
+## Working with database
+ 
+shared.module.ts
+```
+imports: [
+  AngularFireDatabaseModule
+]
+```
+
+meals.service.ts
+```
+export interface Meal {
+  name: string,
+  ingredients: string[],
+  timestamp: number,
+  $key: string,
+  $exists: () => boolean
+}
+
+@Injectable()
+export class MealsService {
+  meals$: Observable<Meal[]> = this.db.list(`meals/${this.uid}`).pipe(
+    tap(next => this.store.set('meals', next);
+  );
+  
+  constructor (
+    private store: Store,
+    private db: AngularFireDatabase,
+    private authService: AuthService
+  ){}
+  
+  get uid() {
+    return this.authService.user.uid;
   }
 }
 ```

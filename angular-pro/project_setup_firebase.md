@@ -120,7 +120,7 @@ imports: [
 ]
 ```
 
-meals.service.ts
+**meals.service.ts**
 ```
 export interface Meal {
   name: string,
@@ -144,6 +144,24 @@ export class MealsService {
   
   get uid() {
     return this.authService.user.uid;
+  }
+  
+  getMeal(key: string) {
+    if (!key) return of({});
+    return this.store.select<Meal[]>('meals').pipe(
+      filter(Boolean),
+      map(meals => {
+        return meals.find((meal:Meal) => meal.$key === key)
+      })
+     );
+  }
+  
+  addMeal(meal: Meal) {
+    return this.db.list(`meals/${this.uid}`).push(meal);
+  }
+  
+  removeMeal(key: string) {
+    return this.db.list(`meals/${this.uid}`).remove(key);
   }
 }
 ```

@@ -76,8 +76,12 @@ interface ControlValueAccessor {
 const COUNTER_CONTROL_ACCCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forvardRef(() => StockCounterComponent)
+  // multi: true
 }
 
+@Component({
+  providers: [COUNTER_CONTROL_ACCESSOR]
+})
 export class MyComponent implements ControlValueAccessor {
   private onTouch: Function;
   private onModelChange: Function;
@@ -90,12 +94,10 @@ export class MyComponent implements ControlValueAccessor {
     this.onModelChange = fn
   }
   
+  // set value outside component
   wrireValue(value) {
     this.value = value || 0;
-  }
-  
-  registerOnChange(fn) {}
-  registerOnTouched(fn) {}
+  }   
   
   increment () {
     if (this.value < this.max) {

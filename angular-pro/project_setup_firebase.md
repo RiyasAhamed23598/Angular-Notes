@@ -167,6 +167,18 @@ export class MealsService {
   removeMeal(key: string) {
     return this.db.list(`meals/${this.uid}`).remove(key);
   }
+  
+  // query db
+  
+  private getSchedule(startAt: number, endAt: number) {
+    return this.db.list(`schedule/${this.uid}`, {
+      query: {
+        orderByChild: 'timestamp',
+        startAt,
+        endAt
+      }
+    }
+  }
 }
 ```
 

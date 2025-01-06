@@ -14,3 +14,7 @@
 2023 - 16 - "Signals"
 new major version every ~6 months
 
+### Extensions for VScode
+- Angular Language Service
+- Angular Essentials
+

@@ -11,7 +11,7 @@
 ### History
 - 2016 - angular 2 is released
 - 2022 - 14-15 - "standalone Components"
-- 2023 - 16 - "Signals"
+- 2023 - 16 - "Signals", destroyRef
 - 17 - @for @if
 - new major version every ~6 months
 

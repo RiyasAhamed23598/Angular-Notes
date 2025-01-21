@@ -9,3 +9,11 @@ without signals:
 @Input() size: number
 @Output() sizeChange: number
 ```
+
+using signals
+
+```
+size = model();
+//or
+size = model.required();
+```

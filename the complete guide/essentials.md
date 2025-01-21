@@ -5,5 +5,7 @@ ng g c user
 
 without signals:
 
-```@Input() size: number
-   @Output() sizeChange: number```
+```
+@Input() size: number
+@Output() sizeChange: number
+```

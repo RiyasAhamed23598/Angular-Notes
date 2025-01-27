@@ -13,6 +13,7 @@
 - 2022 - 14-15 - "standalone Components"
 - 2023 - 16 - "Signals", destroyRef, afterRender & afterNextRender hooks
 - 17 - @for @if
+- 18 - ability to become zoneless
 - new major version every ~6 months
 
 ### Extensions for VScode

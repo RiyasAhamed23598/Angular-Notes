@@ -23,6 +23,6 @@ size = model.required();
 **main.ts** -> change to 
 ```
 bootstrapApplication(AppComponent{
-  providers: provideExperimentalZonelessChangeDetection
+  providers: [provideExperimentalZonelessChangeDetection()]
 }).catch((err) => console.error(err));
 ```

@@ -17,3 +17,12 @@ size = model();
 //or
 size = model.required();
 ```
+
+## get rid of zone.js
+**angular.json** -> remove "zone.js"
+**main.ts** -> change to 
+```
+bootstrapApplication(AppComponent{
+  providers: provideExperimentalZonelessChangeDetection
+}).catch((err) => console.error(err));
+```

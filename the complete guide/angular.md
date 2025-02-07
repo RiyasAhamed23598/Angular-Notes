@@ -12,7 +12,7 @@
 - 2016 - angular 2 is released
 - 2022 - 14-15 - "standalone Components"
 - 2023 - 16 - "Signals", destroyRef, afterRender & afterNextRender hooks
-- 17 - @for @if, deferable views
+- 17 - @for @if, @defer (deferable views)
 - 18 - ability to become zoneless
 - new major version every ~6 months
 

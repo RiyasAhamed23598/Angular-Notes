@@ -31,7 +31,7 @@ bootstrapApplication(AppComponent{
 
 *ng build || npm run build*
 
-### Single Page Application
+### Single Page Application (SPA)
 - Build a client-side only web application
 - All code executes in the browser
 - No dynamic web server needed - a static host suffices
@@ -40,7 +40,7 @@ bootstrapApplication(AppComponent{
 #### Deployment with angular CLI
 https://angular.io/guide/deployment
 
-### Server Side Renderend App
+### Server Side Renderend App (SSR)
 - Angular app routes are rendered on-demand on a dynamic web server
 - Browser receives finished, rendered page
 - Web app is hydrated ("activated") and becomes a SPA after initial rendering
@@ -65,4 +65,25 @@ constructor() {
       }
     });
   }
+```
+### Static Site Generation (SSG)
+- Angular app routes are pre-rendered at build time
+- Browser receives finished, rendered pages
+- Web app is hydrated ("activated") and becomes a SPA 
+- Dynamic web server is required - static host suffices if ALL pages are pre-rendered
+- **disadvantages**: No dynamic server-side data fetching
+
+*ng add @angular/ssr*
+
+-- add new file (user-routes.txt) and write all dynamic routs that should be prerendered
+```
+/users/u1/tasks
+/users/u2/tasks
+```
+
+-- angular.json file -> change "prerender": true  - to
+```
+"prerender": {
+  "routesFile": "user-routes.txt"
+},
 ```

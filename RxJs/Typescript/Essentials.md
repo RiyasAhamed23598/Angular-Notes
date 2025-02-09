@@ -50,3 +50,7 @@ order in tuple have a very specific meaning
 const pepsi: [string, boolean, number] = ['brown', true, 40];
 type Drink = [string, boolean, number]; // type alias
 ```
+### Modifiers
+**public** - can be called anywhere, anytime
+**private** - can only be called by other methods in this class
+**protected** - can be called by other methods in this class or by other methods in child classes

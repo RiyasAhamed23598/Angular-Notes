@@ -13,7 +13,7 @@
 **npm i nodemon** - this package responsible for executing code once it was compiled
 **npm i concurrently** - run multiple scripts in one time
 
-**package.json**
+**package.json** - run several commands in one with concurrently package
 ```
 "scripts": {
     "start:build": "tsc -w",
@@ -23,20 +23,30 @@
 ```
 ### Sorter
 ```
-export class Sorter {
-  constructor(public collection: NumbersCollection) { }
-
+export abstract class Sorter {
+  abstract compare(leftIndex: number, rightIndex:number): boolean;
+  abstract swap(leftIndex: number, rightIndex:number): void;
+  abstract lenght: number;
+  
   sort(): void {
-    const { length } = this.collection;
+    const { length } = this;
 
     for (let i=0; i < lenght; i++) {
       for (let j = 0; j < length - i - 1; j++) {
-        if (this.collection.compare(j, j+1) {
-          this.collection.swap(j, j+1)
+        if (this.compare(j, j+1) {
+          this.swap(j, j+1)
         }
       }
     }
   }
+}
+```
+### Sortable interface
+```
+interface Sortable {
+    length:number;
+    compare(leftIndex: number, rightIndex: number): boolean;
+    swap(leftIndex: number, rightIndex: number): void;
 }
 ```
 
